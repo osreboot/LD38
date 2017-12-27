@@ -8,13 +8,13 @@ import java.util.Arrays;
 
 import org.newdawn.slick.Color;
 
-import com.osreboot.ridhvl.HvlCoord;
+import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.painter.HvlCursor;
 
 public class Game {
 
-	public static final HvlCoord LOC_SPAWNER = new HvlCoord((1280f/2f)-(1280f/4f), 720f/2f);
+	public static final HvlCoord2D LOC_SPAWNER = new HvlCoord2D((1280f/2f)-(1280f/4f), 720f/2f);
 
 	//score elements
 
@@ -35,7 +35,7 @@ public class Game {
 	public ArrayList<Group> groupQueue = new ArrayList<>();
 	public Group groupCurrent;
 
-	public HvlCoord cursorLoc = new HvlCoord(LOC_SPAWNER), cursorLocGoal = new HvlCoord(LOC_SPAWNER);
+	public HvlCoord2D cursorLoc = new HvlCoord2D(LOC_SPAWNER), cursorLocGoal = new HvlCoord2D(LOC_SPAWNER);
 
 	public Game(){
 		initializeGroups();
@@ -57,9 +57,9 @@ public class Game {
 	public void onClick(){
 		boolean changed = false;
 		if(isMoveOk(cursorLocGoal)){
-			for(HvlCoord c : groupCurrent.getDrawLocations(cursorLocGoal.x, cursorLocGoal.y)){
+			for(HvlCoord2D c : groupCurrent.getDrawLocations(cursorLocGoal.x, cursorLocGoal.y)){
 				for(Tile t : tiles){
-					if(c.equals(new HvlCoord(t.getScreenCoords().x, t.getScreenCoords().y))){
+					if(c.equals(new HvlCoord2D(t.getScreenCoords().x, t.getScreenCoords().y))){
 						if(t.state != Tile.State.NONE){
 							if(t.state == Tile.State.BLACK) t.state = Tile.State.WHITE;
 							else if(t.state == Tile.State.WHITE) t.state = Tile.State.BLACK;
@@ -71,7 +71,7 @@ public class Game {
 			}
 		}
 		if(changed){
-			cursorLoc = new HvlCoord(LOC_SPAWNER);
+			cursorLoc = new HvlCoord2D(LOC_SPAWNER);
 			groupCurrent = new Group(groupQueue.get(0));
 			groupQueue.remove(0);
 			populateQueue();
@@ -86,12 +86,12 @@ public class Game {
 		if(isRunning && totalTime > 0){
 			float distQueue = (float)Math.pow(queueOffset, 0.8f);
 			queueOffset = HvlMath.stepTowards(queueOffset, delta*distQueue*10, 0);
-			HvlCoord newCursorLocGoal = new HvlCoord(
+			HvlCoord2D newCursorLocGoal = new HvlCoord2D(
 					(Math.round((HvlCursor.getCursorX() - (1280f/2f))/Main.TILE_SIZE)*Main.TILE_SIZE) + (1280f/2f), 
 					(Math.round((HvlCursor.getCursorY() - (720f/2f))/Main.TILE_SIZE)*Main.TILE_SIZE) + (720f/2f));
 			if(!cursorLocGoal.equals(newCursorLocGoal)/* && isMoveOk(newCursorLocGoal)*/) cursorLocGoal = newCursorLocGoal;
 			float dist = (float)Math.pow(HvlMath.distance(cursorLocGoal, cursorLoc), 0.8f);
-			cursorLoc = new HvlCoord(
+			cursorLoc = new HvlCoord2D(
 					HvlMath.stepTowards(cursorLoc.x, delta*dist*50, cursorLocGoal.x),
 					HvlMath.stepTowards(cursorLoc.y, delta*dist*50, cursorLocGoal.y));
 
@@ -164,11 +164,11 @@ public class Game {
 		}
 	}
 
-	private boolean isMoveOk(HvlCoord goalArg){
+	private boolean isMoveOk(HvlCoord2D goalArg){
 		boolean output = false;
-		for(HvlCoord c : groupCurrent.getDrawLocations(goalArg.x, goalArg.y)){
+		for(HvlCoord2D c : groupCurrent.getDrawLocations(goalArg.x, goalArg.y)){
 			for(Tile t : tiles){
-				if(c.equals(new HvlCoord(t.getScreenCoords().x, t.getScreenCoords().y)) && t.state != Tile.State.NONE){
+				if(c.equals(new HvlCoord2D(t.getScreenCoords().x, t.getScreenCoords().y)) && t.state != Tile.State.NONE){
 					output = true;
 				}
 			}
@@ -177,19 +177,19 @@ public class Game {
 	}
 
 	public void initializeGroups(){
-		groups.add(new Group(new HvlCoord(1, 1), new ArrayList<Tile>(Arrays.asList(new Tile[]{
+		groups.add(new Group(new HvlCoord2D(1, 1), new ArrayList<Tile>(Arrays.asList(new Tile[]{
 				new Tile(0, 0, Tile.State.WHITE),
 				new Tile(1, 1, Tile.State.WHITE),
 		}))));
-		groups.add(new Group(new HvlCoord(0, 1), new ArrayList<Tile>(Arrays.asList(new Tile[]{
+		groups.add(new Group(new HvlCoord2D(0, 1), new ArrayList<Tile>(Arrays.asList(new Tile[]{
 				new Tile(0, 1, Tile.State.WHITE),
 				new Tile(1, 0, Tile.State.WHITE),
 		}))));
-		groups.add(new Group(new HvlCoord(0, 1), new ArrayList<Tile>(Arrays.asList(new Tile[]{
+		groups.add(new Group(new HvlCoord2D(0, 1), new ArrayList<Tile>(Arrays.asList(new Tile[]{
 				new Tile(0, 0, Tile.State.WHITE),
 				new Tile(0, 1, Tile.State.WHITE),
 		}))));
-		groups.add(new Group(new HvlCoord(1, 0), new ArrayList<Tile>(Arrays.asList(new Tile[]{
+		groups.add(new Group(new HvlCoord2D(1, 0), new ArrayList<Tile>(Arrays.asList(new Tile[]{
 				new Tile(0, 0, Tile.State.WHITE),
 				new Tile(1, 0, Tile.State.WHITE),
 		}))));

@@ -4,7 +4,7 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
 import org.newdawn.slick.Color;
 
-import com.osreboot.ridhvl.HvlCoord;
+import com.osreboot.ridhvl.HvlCoord2D;
 import com.osreboot.ridhvl.HvlMath;
 
 public class Tile {
@@ -37,8 +37,8 @@ public class Tile {
 		}
 	}
 
-	public HvlCoord getScreenCoords(){
-		return new HvlCoord((1280f/2f) + (((float)x) * Main.TILE_SIZE), (720f/2f) + (((float)y) * Main.TILE_SIZE));
+	public HvlCoord2D getScreenCoords(){
+		return new HvlCoord2D((1280f/2f) + (((float)x) * Main.TILE_SIZE), (720f/2f) + (((float)y) * Main.TILE_SIZE));
 	}
 
 }

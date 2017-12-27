@@ -55,7 +55,7 @@ public class Main extends HvlTemplateInteg2D{
 	public static boolean muted = false;
 	
 	public Main(){
-		super(60, 1280, 720, "Iota Nor by Os_Reboot", "Icon", new HvlDisplayModeDefault());
+		super(200, 1280, 720, "Iota Nor by Os_Reboot", "Icon", new HvlDisplayModeDefault());
 	}
 
 	@Override
